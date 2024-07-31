@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   },{
     validators:passwordMatchValidator  
   })
+  
 
   onMonthDayYearInput(event: any) {
     const input = event.target as HTMLInputElement;

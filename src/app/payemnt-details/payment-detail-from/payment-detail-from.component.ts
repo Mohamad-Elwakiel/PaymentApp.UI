@@ -3,7 +3,7 @@ import { PaymentDetailModel } from 'src/app/shared/payment-detail.model';
 import { PaymentDetailServiceService } from 'src/app/shared/payment-detail-service.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-payment-detail-from',
@@ -16,7 +16,7 @@ export class PaymentDetailFromComponent implements OnInit {
 items : MenuItem[] | undefined;
  
   userForm!: FormGroup;
-  constructor(private fb: FormBuilder, private service : PaymentDetailServiceService) {
+  constructor(private fb: FormBuilder, private service : PaymentDetailServiceService,private messageService: MessageService) {
     this.userForm! = this.fb.group({
       cardOwnerName: ['', [Validators.required]],
       cardNumber: ['', [Validators.required]],
@@ -26,6 +26,14 @@ items : MenuItem[] | undefined;
 
     });
     this.items =[
+      
+      {
+        label : 'Home page',
+        routerLink : '/home-screen', 
+        icon : 'pi pi-home', 
+        
+        
+      },
       {
         label : 'Payment Actions',
         items:
@@ -35,13 +43,8 @@ items : MenuItem[] | undefined;
         },
       ],
        
-        icon : 'pi pi-fw pi-plus',
+        icon : 'pi pi-spin pi-cog',
 
-      },
-      {
-        label : 'Home page',
-        routerLink : '/home-screen', 
-        icon : 'pi pi-fw pi-table', 
       },
       
     ]
@@ -83,11 +86,14 @@ items : MenuItem[] | undefined;
       };
       this.service.createUser(userData).subscribe(
         response=>{console.log("user created succesfully!",response)
-          this.userForm.reset(); 
-          window.location.reload();
+          this.messageService.add({severity:'success', summary:'Success', detail:'User Created Successfully'});
+          this.userForm.reset();
+
+          
          
         },
         error=>{
+          this.messageService.add({severity:'error', summary:'Error', detail:'Error Creating User'});
           console.log("Error creating user",error);
         }
       )

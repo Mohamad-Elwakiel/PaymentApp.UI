@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PaymentDetailServiceService } from '../shared/payment-detail-service.service';
-import { Login } from '../interfaces/auth';
+import { Login, responeModel } from '../interfaces/auth';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-Login',
@@ -15,18 +16,21 @@ export class LoginComponent implements OnInit {
   LogInFrom = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
+    
   });
   LoginUser() {
     const postData = { ...this.LogInFrom.value };
     this.service.loginUser(postData as Login).subscribe(
-      (respone: any) => {
+      (respone: responeModel) => {
         console.log(respone);
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Login Successful',
         });
-        localStorage.setItem('token', JSON.stringify(respone));
+        localStorage.setItem('token', respone.jwtToken);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('refreshToken', JSON.stringify(respone.refreshToken));
         this.router.navigate(['payemnt-details']);
         this.isLoggedIn = true;
       },

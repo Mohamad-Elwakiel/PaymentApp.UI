@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LazyLoadEvent, MenuItem } from 'primeng/api';
+import { LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { PaymentDetailServiceService } from 'src/app/shared/payment-detail-service.service';
 import { PaymentDetailModel } from 'src/app/shared/payment-detail.model';
@@ -12,7 +12,7 @@ import { PaymentDetailModel } from 'src/app/shared/payment-detail.model';
 export class PaymentTableDataComponent implements OnInit {
 list:any[] = [];
 items : MenuItem[] | undefined;
-  constructor(public service : PaymentDetailServiceService) { }
+  constructor(private service : PaymentDetailServiceService,private messageService: MessageService) { }
 
   ngOnInit() : void{
     // this.service.refreshList()
@@ -28,6 +28,12 @@ items : MenuItem[] | undefined;
       
     // });
     this.items =[
+   
+      {
+        label : 'Home page',
+        routerLink : '/home-screen', 
+        icon : 'pi pi-home', 
+      },
       {
         label : 'Payment Actions',
         items:
@@ -37,13 +43,8 @@ items : MenuItem[] | undefined;
         },
       ],
        
-        icon : 'pi pi-fw pi-plus',
+        icon : 'pi pi-spin pi-cog',
 
-      },
-      {
-        label : 'Home page',
-        routerLink : '/home-screen', 
-        icon : 'pi pi-fw pi-table', 
       },
       
     ]
@@ -85,8 +86,13 @@ onDelete(id:number)
     {
       next : any => {
         this.list = any as PaymentDetailModel[]
+        if(this.list.length == 0)
+        {
+          this.messageService.add({severity:'error', summary: 'Error', detail: "Could not find any record"});
+        }
       },
       error: any => {
+        this.messageService.add({severity:'error', summary: 'Error', detail: "Could not find any record"});
         console.log(any);
       }
     }

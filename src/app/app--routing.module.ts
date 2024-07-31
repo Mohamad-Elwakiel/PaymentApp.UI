@@ -5,6 +5,7 @@ import { PaymentTableDataComponent } from './payemnt-details/PaymentTableData/Pa
 import { LoginComponent } from './Login/Login.component';
 import { RegisterComponent } from './Register/Register.component';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -30,9 +31,15 @@ const routes: Routes = [
     component:HomeScreenComponent
    },
    {
+    path:"reset-password",
+    component:ResetPasswordComponent
+   },
+   {
     path:'',
     redirectTo:'login',
-    pathMatch:'full'
+    pathMatch:'full',
+    
+    
    }
 
 ];

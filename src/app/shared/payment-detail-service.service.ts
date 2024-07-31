@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { PaymentDetailModel } from './payment-detail.model';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { Login, User } from '../interfaces/auth';
+import { Login, resetPassowrd, responeModel, User } from '../interfaces/auth';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,10 +35,10 @@ isLoggedIn:boolean = false;
     return this.http.post(this.registerUrl, userDetails, { headers });
 
   }
-  loginUser(loginDetails :Login)
+  loginUser(loginDetails :Login) : Observable<responeModel>
   {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.loginUrl, loginDetails, { headers, responseType: 'text'});
+    return this.http.post<responeModel>(this.loginUrl, loginDetails, { headers});
   }
   deletePaymentDetail(id:number)
   {
@@ -51,5 +51,12 @@ isLoggedIn:boolean = false;
   const url = `${this.url}/searchUser?pageIndex=1&pageSize=10&${queryParams}`;
   return this.http.get(url);
     
+  }
+  resetPassword(resetPassowrdForm:resetPassowrd)
+  {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log('Request Payload:', resetPassowrdForm);
+    return this.http.post(this.accountUrl +'/ResetPassword', resetPassowrdForm, { headers });
+
   }
 }

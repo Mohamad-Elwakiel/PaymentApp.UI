@@ -21,20 +21,28 @@ export class HomeScreenComponent implements OnInit {
        [ {
           label : 'Submit Payment Details',
           routerLink : '/payemnt-details',
+          
         },
       {
         label : 'Payment Table',
         routerLink:'/payemnt-details/PaymentTableData',
       }],
        
-        icon : 'pi pi-fw pi-plus',
+        icon : 'pi pi-spin pi-cog',
 
       },
      
       
       {
         label : 'Logout',
-        command: () => this.logout()
+        icon:'pi pi-sign-out',
+        command: () => this.logout(),
+        
+      },
+      {
+        label:'Reset Password',
+        routerLink:'/reset-password',
+        icon:'pi pi-key',
       }
 
     ]

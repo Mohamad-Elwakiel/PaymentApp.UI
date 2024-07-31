@@ -25,15 +25,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 @NgModule({
-  declarations: [			
+  declarations: [				
     AppComponent,
     PayemntDetailsComponent,
     PaymentDetailFromComponent,
     PaymentTableDataComponent,
       LoginComponent,
       RegisterComponent,
-      HomeScreenComponent
+      HomeScreenComponent,
+      ResetPasswordComponent,
+      ResetPasswordComponent
    ],
   imports: [
     BrowserModule,
