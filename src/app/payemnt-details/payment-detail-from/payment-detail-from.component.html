@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center h-100 w-100">
+  <p-menubar [model]="items" [style]="{marginTop: '10px', width: '1200px'}">
+
+  </p-menubar>
+</div>
+<div class="d-flex justify-content-center">
+
+<p-card  header="Submit Payment Details" [style]="{width: '1200px'}">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="cardOwnerName">Card Owner Name</label>
+    <input
+      id="cardOwnerName"
+      type="text"
+      class="form-control"
+      formControlName="cardOwnerName"
+      placeholder="Enter your name"
+    />
+    <div
+      *ngIf="
+        userForm.get('cardOwnerName')?.invalid &&
+        userForm.get('cardOwnerName')?.touched
+      "
+    >
+      <small class="text-danger">Enter a valid Name</small>
+    </div>
+  </div>
+  <div>
+    <label for="cardNumber">Card Number</label>
+    <input
+      id="cardNumber"
+      type="text"
+      class="form-control"
+      formControlName="cardNumber"
+      placeholder="Enter the 16 digit card number"
+    />
+    <div
+      *ngIf="
+        userForm.get('cardNumber')?.invalid &&
+        userForm.get('cardNumber')?.touched
+      "
+    >
+      <small class="text-danger">Enter a valid Number</small>
+    </div>
+  </div>
+  <div>
+    <label for="expirationDate">Expiration Date</label>
+    <input
+      id="expirationDate"
+      type="text"
+      class="form-control"
+      formControlName="expirationDate"
+      placeholder="MM/YY"
+      (input)="onMonthDayInput($event)"
+      pattern="[0-9]{2}/[0-9]{2}"
+    />
+    <div
+      *ngIf="
+        userForm.get('expirationDate')?.invalid &&
+        userForm.get('expirationDate')?.touched
+      "
+    >
+      <small class="text-danger">Enter a valid expiration Date</small>
+    </div>
+  </div>
+  <div>
+    <label for="securityCode">Security Code</label>
+    <input
+      id="securityCode"
+      type="password"
+      class="form-control"
+      formControlName="securityCode"
+      placeholder="CVV"
+      pattern="[0-9]{3}"
+    />
+    <div
+      *ngIf="
+        userForm.get('securityCode')?.invalid &&
+        userForm.get('securityCode')?.touched
+      "
+    >
+      <small class="text-danger">Enter a valid Security Code</small>
+
+      <small
+        class="text-danger"
+        *ngIf="userForm.get('securityCode')?.errors?.['invalidCvv']"
+      >
+        Enter a valid CVV (3 digits)
+      </small>
+    </div>
+  </div>
+
+  <div class="d-grid" style="margin-top: 10px; ">
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg btn-success"
+      type="submit"
+      [disabled]="userForm.invalid"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+</p-card>
+</div>

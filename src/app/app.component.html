@@ -1,0 +1,11 @@
+<div class="container align-items-center">
+  <div class="row">
+    <div class="col-8 offset-2 align-items-center">
+      <p-menubar *ngIf= "loggedIn" [model]="items"></p-menubar>
+      <!-- <button class="btn btn-success" (click)="toSubmitPayment()" > Submit payment </button>
+      <button class="btn btn-primary" (click)="toPaymentDataTable()">Go to PaymentDetail</button> -->
+    </div>
+    <router-outlet></router-outlet>
+    <p-toast></p-toast>
+  </div>
+</div>
